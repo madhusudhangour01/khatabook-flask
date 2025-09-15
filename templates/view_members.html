@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Members</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>👀 All Members</h1>
+
+    {% if members %}
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+        {% for member in members %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ member.name }}</td>
+          <td>{{ member.amount }}</td>
+          <td><a href="{{ url_for('delete_member', index=loop.index0) }}">❌ Delete</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No members added yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('index') }}">🏠 Back to Home</a>
+  </div>
+</body>
+</html>

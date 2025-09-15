@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>📒 KHATABOOK</header>
+
+    <div class="menu">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('add_member') }}">Add Member</a>
+        <a href="{{ url_for('search') }}">Search</a>
+        <a href="{{ url_for('filter_members') }}">Filter</a>
+    </div>
+
+    <div class="box">
+        <h2>Add Transaction</h2>
+        <form method="POST">
+            <label>Choose Member:</label>
+            <select name="member_id" required>
+                {% for member in members %}
+                <option value="{{ member.id }}">{{ member.name }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input type="number" name="amount" placeholder="Enter Amount (+/-)" required>
+            <br>
+            <button type="submit">Add Transaction</button>
+        </form>
+    </div>
+</body>
+</html>
+<div class="back-btn">
+    <a href="{{ url_for('index') }}">⬅ Back</a>
+</div>

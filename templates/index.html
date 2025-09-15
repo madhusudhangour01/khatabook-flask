@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khatabook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        Khatabook
+    </header>
+
+    <!-- Menu -->
+    <div class="menu">
+        <a href="{{ url_for('add_member') }}">Add Member</a>
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+        <a href="{{ url_for('filter_members', type='positive') }}">Positive Balance</a>
+        <a href="{{ url_for('filter_members', type='negative') }}">Negative Balance</a>
+        <a href="{{ url_for('search') }}">Search</a>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <h2>Members List</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.balance }}</td>
+                <td class="table-actions">
+                    <a href="{{ url_for('history', member_id=member.id) }}" class="history-btn">History</a>
+                    <a href="{{ url_for('delete_member', member_id=member.id) }}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this member?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
