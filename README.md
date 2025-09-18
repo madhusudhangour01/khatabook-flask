@@ -25,7 +25,7 @@ It helps in managing members, recording transactions, and keeping track of accou
 ![Add Member](screenshots/add_member.png)
 
 ### Add Transection
-![Add Transection](screenshots/add_transection.png)
+![Add Transection](screenshots/add_transaction.png)
 
 
 ---
