@@ -16,7 +16,7 @@ It helps in managing members, recording transactions, and keeping track of accou
 ---
 
 
-## 📸 Screenshots  
+## 📸 Screenshots 
 
 ### Home / Dashboard
 ![Home](screenshots/home.png)
