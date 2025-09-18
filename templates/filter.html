@@ -3,40 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filter Members</title>
+    <title>Filtered Members</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>📒 KHATABOOK</header>
 
-    <div class="menu">
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('add_member') }}">Add Member</a>
-        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
-        <a href="{{ url_for('search') }}">Search</a>
+<header>
+    📒 KHATABOOK
+    <div class="top-right">
+        <span>{{ username }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
     </div>
+</header>
 
-    <div class="container">
-        <h2>Filtered Members</h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Balance</th>
-                <th>History</th>
-            </tr>
-            {% for member in members %}
-            <tr>
-                <td>{{ member.id }}</td>
-                <td>{{ member.name }}</td>
-                <td>{{ member.balance }}</td>
-                <td><a href="{{ url_for('history', member_id=member.id) }}">View</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
+<div class="menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('add_member') }}">Add Member</a>
+    <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+    <a href="{{ url_for('search') }}">Search</a>
+</div>
+
+<div class="container">
+    <h2>Filtered Members</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.id }}</td>
+            <td>{{ member.name }}</td>
+            <td class="{{ 'positive' if member.balance >= 0 else 'negative' }}">{{ member.balance }}</td>
+            <td class="table-actions">
+                <a href="{{ url_for('history', member_id=member.id) }}" class="history-btn">History</a>
+                <a href="{{ url_for('delete_member', member_id=member.id) }}" class="delete-btn" onclick="return confirm('Delete this member?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not members %}
+        <tr>
+            <td colspan="4">No members found.</td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+
 <div class="back-btn">
     <a href="{{ url_for('index') }}">⬅ Back</a>
 </div>
+
+</body>
+</html>

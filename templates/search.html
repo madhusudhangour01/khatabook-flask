@@ -3,48 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Member</title>
+    <title>Search Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>📒 KHATABOOK</header>
 
-    <div class="menu">
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('add_member') }}">Add Member</a>
-        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
-        <a href="{{ url_for('filter_members') }}">Filter</a>
+<header>
+    📒 KHATABOOK - Search Results
+    <div class="top-right">
+        <span>{{ username }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
     </div>
+</header>
 
-    <div class="box">
-        <h2>Search Member</h2>
-        <form method="POST">
-            <input type="text" name="query" placeholder="Enter Name" required>
-            <br>
-            <button type="submit">Search</button>
-        </form>
+<!-- Menu links -->
+<div class="menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('add_member') }}">Add Member</a>
+    <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+    <a href="{{ url_for('filter_members') }}">Filter</a>
+</div>
 
-        {% if members %}
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Balance</th>
-                <th>History</th>
-            </tr>
-            {% for m in members %}
-            <tr>
-                <td>{{ m.id }}</td>
-                <td>{{ m.name }}</td>
-                <td>{{ m.balance }}</td>
-                <td><a href="{{ url_for('history', member_id=m.id) }}">View</a></td>
-            </tr>
-            {% endfor %}
-        </table>
+<div class="container">
+    <h2>Search Results</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.id }}</td>
+            <td>{{ member.name }}</td>
+            <td class="{{ 'positive' if member.balance >= 0 else 'negative' }}">{{ member.balance }}</td>
+            <td class="table-actions">
+                <a href="{{ url_for('history', member_id=member.id) }}" class="history-btn">History</a>
+                <a href="{{ url_for('delete_member', member_id=member.id) }}" class="delete-btn" onclick="return confirm('Delete this member?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not members %}
+        <tr>
+            <td colspan="4">No results found.</td>
+        </tr>
         {% endif %}
-    </div>
-</body>
-</html>
+    </table>
+</div>
+
 <div class="back-btn">
     <a href="{{ url_for('index') }}">⬅ Back</a>
 </div>
+
+</body>
+</html>
